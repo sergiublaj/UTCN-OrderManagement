@@ -16,6 +16,10 @@ import java.lang.reflect.ParameterizedType;
 import java.sql.Date;
 import java.util.ArrayList;
 
+/**
+ * <p>Abstract GUI panel for CRUD operations</p>
+ * @param <T> type of the object
+ */
 public abstract class AbstractPanel<T> extends JPanel {
    private final Class<T> type;
    private final JLabel panelTitle = new JLabel();
@@ -27,6 +31,9 @@ public abstract class AbstractPanel<T> extends JPanel {
    private final JButton performOperationBtn = new JButton();
    private final JButton nextStepBtn = new JButton();
 
+   /**
+    * Default constructor
+    */
    @SuppressWarnings("unchecked")
    public AbstractPanel() {
       this.type = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
@@ -34,6 +41,9 @@ public abstract class AbstractPanel<T> extends JPanel {
       this.showCreateObjectPanel();
    }
 
+   /**
+    * <p>Set up the panel</p>
+    */
    private void setUp() {
       this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -51,18 +61,28 @@ public abstract class AbstractPanel<T> extends JPanel {
       tableEntries = new DefaultTableModel(tableHeader.toArray(), 0);
    }
 
+   /**
+    * <p>Set up the panel title</p>
+    */
    private void initializeTitle() {
       panelTitle.setAlignmentX(CENTER_ALIGNMENT);
       panelTitle.setFont(new Font("Tahoma", Font.BOLD, 25));
       panelTitle.setBorder(new EmptyBorder(15, 0, 15, 0));
    }
 
+   /**
+    * <p>Set up the buttons</p>
+    * @param crtButton current button
+    */
    private void initializeButton(JButton crtButton) {
       crtButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
       crtButton.setAlignmentX(CENTER_ALIGNMENT);
       crtButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
    }
 
+   /**
+    * <p>Panel for creating an object</p>
+    */
    public void showCreateObjectPanel() {
       this.removeAll();
 
@@ -79,6 +99,9 @@ public abstract class AbstractPanel<T> extends JPanel {
       this.revalidate();
    }
 
+   /**
+    * <p>Panel for inserting the id of an object</p>
+    */
    public void showObjectByIdPanel() {
       this.removeAll();
 
@@ -101,13 +124,17 @@ public abstract class AbstractPanel<T> extends JPanel {
       this.revalidate();
    }
 
+   /**
+    * <p>Panel for editing an object</p>
+    * @param object object to be edited
+    */
    public void showEditObjectPanel(T object) {
       this.removeAll();
 
       panelTitle.setText("Edit " + type.getSimpleName().toLowerCase());
       this.add(panelTitle);
 
-      this.showObjectInfo(true);
+      this.showObjectInfo(false);
       this.setFields(object);
       this.enableFields(true);
 
@@ -118,6 +145,10 @@ public abstract class AbstractPanel<T> extends JPanel {
       this.revalidate();
    }
 
+   /**
+    * <p>Panel for removing an object</p>
+    * @param object object to be removed
+    */
    public void showRemoveObjectPanel(T object) {
       this.removeAll();
 
@@ -135,6 +166,10 @@ public abstract class AbstractPanel<T> extends JPanel {
       this.revalidate();
    }
 
+   /**
+    * <p>Panel for searching an object</p>
+    * @param object searched object
+    */
    public void showSearchObjectPanel(T object) {
       this.removeAll();
 
@@ -149,6 +184,9 @@ public abstract class AbstractPanel<T> extends JPanel {
       this.revalidate();
    }
 
+   /**
+    * <p>Panel for viewing all objects</p>
+    */
    public void showViewObjectsPanel() {
       this.removeAll();
 
@@ -163,6 +201,9 @@ public abstract class AbstractPanel<T> extends JPanel {
       this.revalidate();
    }
 
+   /**
+    * <p>Set up the table</p>
+    */
    private void initializeTable() {
       objectTable.setModel(tableEntries);
       objectTable.setRowHeight(25);
@@ -173,6 +214,10 @@ public abstract class AbstractPanel<T> extends JPanel {
       objectTable.setEnabled(false);
    }
 
+   /**
+    * <p>Adds the objects in table</p>
+    * @param objectsList list of objects
+    */
    public void showObjectsInTable(ArrayList<T> objectsList) {
       tableEntries.setRowCount(0);
       for (T crtObject : objectsList) {
@@ -181,6 +226,10 @@ public abstract class AbstractPanel<T> extends JPanel {
       }
    }
 
+   /**
+    * <p>GUI panel for showing info about object</p>
+    * @param hasId boolean value representing the needing of showing the id of object or not
+    */
    public void showObjectInfo(boolean hasId) {
       int fieldsNb;
       if (type.getSimpleName().compareTo("Order") == 0) {
@@ -201,12 +250,20 @@ public abstract class AbstractPanel<T> extends JPanel {
       }
    }
 
+   /**
+    * <p>Enables or disables the input</p>
+    * @param isEnabled input status
+    */
    public void enableFields(boolean isEnabled) {
       for (JTextField textField : fieldsInput) {
          textField.setEnabled(isEnabled);
       }
    }
 
+   /**
+    * <p>Returns the id taken from input field</p>
+    * @return id field
+    */
    public int getIdField() {
       if (fieldsInput.get(0).getText().trim().isBlank()) {
          return -1;
@@ -215,6 +272,10 @@ public abstract class AbstractPanel<T> extends JPanel {
       }
    }
 
+   /**
+    * <p>Creates an object with the values taken from input fields</p>
+    * @return new object
+    */
    public T getFields() {
       T object = null;
       try {
@@ -242,6 +303,10 @@ public abstract class AbstractPanel<T> extends JPanel {
       return object;
    }
 
+   /**
+    * <p>Puts in input fields object values</p>
+    * @param object object where the values will be taken from
+    */
    public void setFields(T object) {
       Object[] values = this.getValues(object);
       for (int i = 0; i < fieldsLabel.size(); i++) {
@@ -249,12 +314,20 @@ public abstract class AbstractPanel<T> extends JPanel {
       }
    }
 
+   /**
+    * <p>Clears the input fields</p>
+    */
    public void clearFields() {
       for (int i = 0; i < fieldsLabel.size(); i++) {
          fieldsInput.get(i).setText("");
       }
    }
 
+   /**
+    * <p>Returns a list of an object's values</p>
+    * @param object object where the values will be taken from
+    * @return list of object's values
+    */
    private Object[] getValues(T object) {
       Object[] values = new Object[type.getDeclaredFields().length];
       Field[] fields = object.getClass().getDeclaredFields();
@@ -269,14 +342,25 @@ public abstract class AbstractPanel<T> extends JPanel {
       return values;
    }
 
+   /**
+    * <p>Adds event listener for button</p>
+    * @param btnListener event listener
+    */
    public void addNextStepBtnListener(ActionListener btnListener) {
       nextStepBtn.addActionListener(btnListener);
    }
 
+   /**
+    * <p>Adds event listener for button</p>
+    * @param btnListener event listener
+    */
    public void addPerformOperationBtnListener(ActionListener btnListener) {
       performOperationBtn.addActionListener(btnListener);
    }
 
+   /**
+    * <p>Removes all buttons' event listeners</p>
+    */
    public void removeAllEventListeners() {
       for (ActionListener crtListener : nextStepBtn.getActionListeners()) {
          nextStepBtn.removeActionListener(crtListener);

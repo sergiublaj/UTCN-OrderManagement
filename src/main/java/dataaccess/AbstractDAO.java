@@ -13,15 +13,27 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class AbstractDAO<T> {
+/**
+ * CRUD queries
+ * @param <T> type of object
+ */
+public abstract class AbstractDAO<T> {
    private static final Logger LOGGER = Logger.getLogger(AbstractDAO.class.getName());
    private final Class<T> type;
 
+   /**
+    * Default constructor
+    */
    @SuppressWarnings("unchecked")
    public AbstractDAO() {
       this.type = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
    }
 
+   /**
+    * <p>Insert a given object into database</p>
+    * @param object object to be inserted into database
+    * @return id of inserted object in database
+    */
    public int insert(T object) {
       Connection dbConnection = ConnectionFactory.getConnection();
       PreparedStatement insertStatement = null;
@@ -45,6 +57,10 @@ public class AbstractDAO<T> {
       return insertedId;
    }
 
+   /**
+    * <p>Build the query for inserting an object</p>
+    * @return insert query
+    */
    private String createInsertQuery() {
       StringBuilder insertQuery = new StringBuilder("INSERT INTO `");
       insertQuery.append(type.getSimpleName());
@@ -72,6 +88,11 @@ public class AbstractDAO<T> {
       return insertQuery.toString();
    }
 
+   /**
+    * <p>Returns an object of a given id</p>
+    * @param id id of the object to look for
+    * @return object with the given id
+    */
    public T findById(int id) {
       Connection dbConnection = null;
       PreparedStatement findStatement = null;
@@ -91,10 +112,19 @@ public class AbstractDAO<T> {
       return toReturn;
    }
 
+   /**
+    * <p>Build the query for finding an object with a given id</p>
+    * @return find query
+    */
    private String createFindQuery() {
       return "SELECT * FROM `" + type.getSimpleName() + "` WHERE ID = ?";
    }
 
+   /**
+    * <p>Updates an object values in the database</p>
+    * @param object object to be updated
+    * @return boolean representing the status
+    */
    public boolean update(T object) {
       Connection dbConnection = null;
       PreparedStatement updateStatement = null;
@@ -112,6 +142,10 @@ public class AbstractDAO<T> {
       return true;
    }
 
+   /**
+    * <p>Build the query for updating an object from database</p>
+    * @return update query
+    */
    private String createUpdateQuery() {
       StringBuilder updateQuery = new StringBuilder("UPDATE `");
       updateQuery.append(type.getSimpleName());
@@ -130,6 +164,11 @@ public class AbstractDAO<T> {
       return updateQuery.toString();
    }
 
+   /**
+    * <p>Removes an object with the given id from database</p>
+    * @param id id of object to be removed
+    * @return boolean representing the status
+    */
    public boolean remove(int id) {
       Connection dbConnection = null;
       PreparedStatement preparedStatement = null;
@@ -146,10 +185,18 @@ public class AbstractDAO<T> {
       return true;
    }
 
+   /**
+    * <p>Builds the query for removing an object from database</p>
+    * @return remove query
+    */
    private String createRemoveQuery() {
       return "DELETE FROM `" + type.getSimpleName() + "` WHERE ID = ?";
    }
 
+   /**
+    * <p>Retrieves a list of objects from database</p>
+    * @return an object list from database
+    */
    public ArrayList<T> findAll() {
       ArrayList<T> entries = new ArrayList<>();
       Connection dbConnection = null;
@@ -169,21 +216,25 @@ public class AbstractDAO<T> {
       return entries;
    }
 
+   /**
+    * <p>Builds the query for selecting all objects type from database</p>
+    * @return select all query
+    */
    private String createFindAllQuery() {
       return "SELECT * FROM `" + type.getSimpleName() + "`";
    }
 
+   /**
+    * <p>Replace '?' in statements with object's values</p>
+    * @param preparedStatement statement where replace will happen
+    * @param object object where the values will be taken
+    * @param isUpdateQuery if it is a create query or an update one
+    */
    private void setValues(PreparedStatement preparedStatement, T object, boolean isUpdateQuery) {
       ArrayList<Object> values = this.getValues(object);
       try {
          for (int i = 1; i < values.size(); i++) {
-            if (values.get(i).getClass() == String.class) {
-               preparedStatement.setString(i, (String) values.get(i));
-            } else if (values.get(i).getClass() == java.sql.Date.class) {
-               preparedStatement.setDate(i, (Date) values.get(i));
-            } else {
-               preparedStatement.setInt(i, (int) values.get(i));
-            }
+            preparedStatement.setObject(i, values.get(i));
          }
          if (isUpdateQuery) {
             preparedStatement.setInt(values.size(), (int) values.get(0));
@@ -193,6 +244,11 @@ public class AbstractDAO<T> {
       }
    }
 
+   /**
+    * <p>Takes the name of fields from an object</p>
+    * @param object object to take the fields name from
+    * @return object fields names
+    */
    public ArrayList<String> getFields(T object) {
       ArrayList<String> fields = new ArrayList<>();
       for (Field field : object.getClass().getDeclaredFields()) {
@@ -206,6 +262,11 @@ public class AbstractDAO<T> {
       return fields;
    }
 
+   /**
+    * <p>Takes the values of fields from an object</p>
+    * @param object object to take the values from
+    * @return object fields values
+    */
    public ArrayList<Object> getValues(T object) {
       ArrayList<Object> values = new ArrayList<>();
       for (Field field : object.getClass().getDeclaredFields()) {
@@ -219,6 +280,11 @@ public class AbstractDAO<T> {
       return values;
    }
 
+   /**
+    * <p>Creates an object list from a result set</p>
+    * @param resultSet result set where the object will be made from
+    * @return list of created objects
+    */
    private ArrayList<T> createObjects(ResultSet resultSet) {
       ArrayList<T> list = new ArrayList<>();
       try {
