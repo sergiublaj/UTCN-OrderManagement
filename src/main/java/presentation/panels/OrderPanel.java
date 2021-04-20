@@ -39,6 +39,7 @@ public class OrderPanel extends AbstractPanel<Order> {
     * <p>GUI panel for showing order's info</p>
     * @param hasId boolean value representing the needing of showing the id of object or not
     */
+   @Override
    @SuppressWarnings("unchecked")
    public void showObjectInfo(boolean hasId) {
       this.addClientsToList();
@@ -85,9 +86,23 @@ public class OrderPanel extends AbstractPanel<Order> {
    }
 
    /**
+    * <p>Adds the orders in table</p>
+    * @param objectsList list of orders
+    */
+   @Override
+   public void showObjectsInTable(ArrayList<Order> objectsList) {
+      tableEntries.setRowCount(0);
+      for (Order crtOrder : objectsList) {
+         Object[] values = this.getValues(crtOrder);
+         tableEntries.addRow(values);
+      }
+   }
+
+   /**
     * <p>Makes an order objects from the input fields</p>
     * @return a newly created order
     */
+   @Override
    @SuppressWarnings("unchecked")
    public Order getFields() {
       Order object = null;
@@ -101,5 +116,21 @@ public class OrderPanel extends AbstractPanel<Order> {
          object.setDate(new Date(System.currentTimeMillis()));
       }
       return object;
+   }
+
+   /**
+    * <p>Returns a list of an object's values</p>
+    * @param object object where the values will be taken from
+    * @return list of object's values
+    */
+   private Object[] getValues(Order object) {
+      ArrayList<Object> values = new ArrayList<>();
+      values.add(object.getId());
+      values.add(new ClientBLL().searchClient(object.getClient()).getName());
+      values.add(new ProductBLL().searchProduct(object.getProduct()).getName());
+      values.add(object.getAmount());
+      values.add(object.getPrice());
+      values.add(object.getDate());
+      return values.toArray();
    }
 }

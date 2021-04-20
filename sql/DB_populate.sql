@@ -17,4 +17,4 @@ insert into `product` (id, name, description, price, stock)
 values (2, 'Caiet', 'Foaie velina', 5, 50);
 
 insert into `product` (id, name, description, price, stock)
-values (3, 'Perna', 'Dormeo', 10, 30);
+values (3, 'Perna', 'Dormeo', 130, 30);

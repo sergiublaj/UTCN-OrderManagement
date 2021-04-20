@@ -1,5 +1,6 @@
 /target/
 !.mvn/wrapper/maven-wrapper.jar
+mysql-connector-java-8.0.23
 
 ### STS ###
 .apt_generated

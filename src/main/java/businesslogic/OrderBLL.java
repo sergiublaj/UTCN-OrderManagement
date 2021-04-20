@@ -19,6 +19,7 @@ public class OrderBLL extends AbstractBLL<Order> {
    private final List<Validator<Order>> validators = new ArrayList<>();
    private final OrderDAO orderDAO = new OrderDAO();
    private final ProductBLL productBLL = new ProductBLL();
+   private final ClientBLL clientBLL = new ClientBLL();
 
    /**
     * <p>Default constructor adding the validators</p>
@@ -54,13 +55,19 @@ public class OrderBLL extends AbstractBLL<Order> {
       ArrayList<String> fields = orderDAO.getFields(crtOrder);
       ArrayList<Object> values = orderDAO.getValues(crtOrder);
 
-      StringBuilder orderBill = new StringBuilder("------ Order ");
+      StringBuilder orderBill = new StringBuilder("---- Order no. ");
       orderBill.append(orderId);
-      orderBill.append(" ------\n");
+      orderBill.append(" ----\n");
       for (int i = 1; i < fields.size(); i++) {
          orderBill.append(fields.get(i));
          orderBill.append(": ");
-         orderBill.append(values.get(i));
+         if(fields.get(i).compareTo("client") == 0) {
+            orderBill.append(clientBLL.searchClient((int)values.get(i)).getName());
+         } else if (fields.get(i).compareTo("product") == 0) {
+            orderBill.append(productBLL.searchProduct((int)values.get(i)).getName());
+         } else {
+            orderBill.append(values.get(i));
+         }
          orderBill.append("\n");
       }
       orderBill.append("----- THANK YOU! -----\n\n");

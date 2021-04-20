@@ -1,8 +1,8 @@
 package businesslogic;
 
+import businesslogic.listeners.*;
 import presentation.MainFrame;
 import presentation.TabbedPanel;
-import businesslogic.listeners.*;
 import presentation.panels.ClientPanel;
 import presentation.panels.OrderPanel;
 import presentation.panels.ProductPanel;
@@ -15,6 +15,7 @@ public class Controller {
 
    /**
     * Default constructor
+    *
     * @param mainFrame application frame
     */
    public Controller(MainFrame mainFrame) {
@@ -26,9 +27,22 @@ public class Controller {
     * <p>Adds the event listeners for buttons</p>
     */
    private void addEventListeners() {
+      this.addTabbedPaneChangeListener();
       this.addClientEventListeners();
       this.addProductEventListeners();
       this.addOrderEventListeners();
+   }
+
+   /**
+    * <p>On changing the tab, it removes previous components</p>
+    */
+   private void addTabbedPaneChangeListener() {
+      mainFrame.getPanelContainer().addChangeListener(e -> {
+         TabbedPanel tabbedPanel = (TabbedPanel) mainFrame.getPanelContainer().getSelectedComponent();
+         tabbedPanel.getActivityPanel().removeAll();
+         tabbedPanel.getActivityPanel().repaint();
+         tabbedPanel.getActivityPanel().revalidate();
+      });
    }
 
    /**
@@ -36,7 +50,7 @@ public class Controller {
     */
    private void addClientEventListeners() {
       TabbedPanel tabbedPanel = (TabbedPanel) mainFrame.getPanelContainer().getComponentAt(0);
-      ClientPanel clientPanel = (ClientPanel)tabbedPanel.getActivityPanel();
+      ClientPanel clientPanel = (ClientPanel) tabbedPanel.getActivityPanel();
       ClientBLL clientBLL = new ClientBLL();
 
       tabbedPanel.addCreateButtonListener(e -> {
@@ -84,7 +98,7 @@ public class Controller {
     */
    private void addProductEventListeners() {
       TabbedPanel tabbedPanel = (TabbedPanel) mainFrame.getPanelContainer().getComponentAt(1);
-      ProductPanel productPanel = (ProductPanel)tabbedPanel.getActivityPanel();
+      ProductPanel productPanel = (ProductPanel) tabbedPanel.getActivityPanel();
       ProductBLL productBLL = new ProductBLL();
 
       tabbedPanel.addCreateButtonListener(e -> {
@@ -132,7 +146,7 @@ public class Controller {
     */
    private void addOrderEventListeners() {
       TabbedPanel tabbedPanel = (TabbedPanel) mainFrame.getPanelContainer().getComponentAt(2);
-      OrderPanel orderPanel = (OrderPanel)tabbedPanel.getActivityPanel();
+      OrderPanel orderPanel = (OrderPanel) tabbedPanel.getActivityPanel();
       OrderBLL orderBLL = new OrderBLL();
 
       tabbedPanel.addCreateButtonListener(e -> {

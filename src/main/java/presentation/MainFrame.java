@@ -2,6 +2,7 @@ package presentation;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 
 /**
@@ -77,10 +78,10 @@ public class MainFrame extends JFrame {
    }
 
    /**
-    * <p>Adds informations about the developer</p>
+    * <p>Adds information about the developer</p>
     */
    private void addAuthorInfo() {
-      JLabel shortInfo = new JLabel("<html>Ver: 1.10_21.46<br>" +
+      JLabel shortInfo = new JLabel("<html>Ver: 1.14_23.31<br>" +
          "@ author Blaj Sergiu<br>" +
          "@ group 30225</html>");
       shortInfo.setFont(new Font("JetBrains Mono", Font.PLAIN, 15));
@@ -209,4 +210,10 @@ public class MainFrame extends JFrame {
    public JTabbedPane getPanelContainer() {
       return panelContainer;
    }
+
+   /**
+    * <p>Adds listener to tabbed pane to remove all components</p>
+    * @param crtListener current listener
+    */
+   public void addChangeTabListener(ChangeListener crtListener) {panelContainer.addChangeListener(crtListener);}
 }

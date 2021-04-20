@@ -28,7 +28,7 @@ public abstract class AbstractPanel<T> extends JPanel {
    private final JTable objectTable = new JTable();
    protected final JPanel midPanel = new JPanel();
 
-   private DefaultTableModel tableEntries;
+   protected DefaultTableModel tableEntries;
    private final JButton performOperationBtn = new JButton();
    private final JButton nextStepBtn = new JButton();
 

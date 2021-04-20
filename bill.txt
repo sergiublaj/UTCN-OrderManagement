@@ -1,40 +1,24 @@
------- Order 1 ------
-client: 1
-product: 1
+---- Order no. 1 ----
+client: Vadim Tudor
+product: Caiet
 amount: 15
-price: 45
+price: 75
 date: 2021-04-20
 ----- THANK YOU! -----
 
------- Order 2 ------
-client: 3
-product: 2
-amount: 5
-price: 25
+---- Order no. 2 ----
+client: Ciobanu Ioan
+product: Faina
+amount: 12
+price: 36
 date: 2021-04-20
 ----- THANK YOU! -----
 
------- Order 1 ------
-client: 1
-product: 1
-amount: 15
-price: 45
-date: 2021-04-20
------ THANK YOU! -----
-
------- Order 2 ------
-client: 3
-product: 2
-amount: 20
-price: 100
-date: 2021-04-20
------ THANK YOU! -----
-
------- Order 3 ------
-client: 2
-product: 3
+---- Order no. 3 ----
+client: Pop Ion
+product: Perna
 amount: 2
-price: 20
+price: 260
 date: 2021-04-20
 ----- THANK YOU! -----
 
