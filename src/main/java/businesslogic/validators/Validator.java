@@ -6,7 +6,7 @@ package businesslogic.validators;
  */
 public interface Validator<T> {
    /**
-    * <p>Method validates current object</p>
+    * <p>Generic method to validate objects manipulated by the application</p>
     * @param crtObject current object
     */
    void validate(T crtObject);

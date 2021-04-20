@@ -8,13 +8,42 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Product specific queries
  */
 public class ProductDAO extends AbstractDAO<Product> {
-   private static final Logger LOGGER = Logger.getLogger(ProductDAO.class.getName());
+   /**
+    * <p>Returns a product with the given name</p>
+    * @param productName name of the product to look for
+    * @return product with the given name
+    */
+   public Product findByName(String productName) {
+      Connection dbConnection = null;
+      PreparedStatement findStatement = null;
+      ResultSet resultSet = null;
+      Product toReturn = null;
+      try {
+         dbConnection = ConnectionFactory.getConnection();
+         findStatement = dbConnection.prepareStatement(createFindByNameQuery());
+         findStatement.setString(1, productName);
+         resultSet = findStatement.executeQuery();
+         toReturn = createObjects(resultSet).get(0);
+      } catch (SQLException | IndexOutOfBoundsException e) {
+         LOGGER.log(Level.WARNING, "Product DAO: findById " + e.getMessage());
+      } finally {
+         ConnectionFactory.closeAll(dbConnection, findStatement, resultSet);
+      }
+      return toReturn;
+   }
+
+   /**
+    * <p>Builds the query for finding a product with a given name</p>
+    * @return find query
+    */
+   private String createFindByNameQuery() {
+      return "SELECT * FROM `Product` WHERE NAME = ?";
+   }
 
    /**
     * <p>Method decrements the stock of a product by an amount in an order</p>
@@ -59,7 +88,6 @@ public class ProductDAO extends AbstractDAO<Product> {
          dbConnection = ConnectionFactory.getConnection();
          preparedStatement = dbConnection.prepareStatement(createPriceQuery());
          preparedStatement.setInt(1, productId);
-         System.out.println(preparedStatement);
          resultSet = preparedStatement.executeQuery();
          resultSet.next();
          totalPrice = resultSet.getInt(1);

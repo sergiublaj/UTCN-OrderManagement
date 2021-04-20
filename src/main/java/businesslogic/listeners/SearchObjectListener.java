@@ -31,7 +31,7 @@ public class SearchObjectListener<T> implements ActionListener {
    }
 
    /**
-    * <p>Adds meaning to button</p>
+    * <p>Tries to search for an object when pressed</p>
     * @param e current event
     */
    @Override

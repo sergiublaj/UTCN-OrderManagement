@@ -35,7 +35,7 @@ public class NextStepListener<T> implements ActionListener {
    }
 
    /**
-    * <p>Adds meaning to button</p>
+    * <p>Tries to find an object with a given id when pressed</p>
     * @param e current event
     */
    @Override

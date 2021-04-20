@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  * @param <T> type of object
  */
 public abstract class AbstractDAO<T> {
-   private static final Logger LOGGER = Logger.getLogger(AbstractDAO.class.getName());
+   protected static final Logger LOGGER = Logger.getLogger(AbstractDAO.class.getName());
    private final Class<T> type;
 
    /**
@@ -30,7 +30,7 @@ public abstract class AbstractDAO<T> {
    }
 
    /**
-    * <p>Insert a given object into database</p>
+    * <p>Inserts a given object into database</p>
     * @param object object to be inserted into database
     * @return id of inserted object in database
     */
@@ -58,7 +58,7 @@ public abstract class AbstractDAO<T> {
    }
 
    /**
-    * <p>Build the query for inserting an object</p>
+    * <p>Builds the query for inserting an object</p>
     * @return insert query
     */
    private String createInsertQuery() {
@@ -100,7 +100,7 @@ public abstract class AbstractDAO<T> {
       T toReturn = null;
       try {
          dbConnection = ConnectionFactory.getConnection();
-         findStatement = dbConnection.prepareStatement(createFindQuery());
+         findStatement = dbConnection.prepareStatement(createFindByIdQuery());
          findStatement.setInt(1, id);
          resultSet = findStatement.executeQuery();
          toReturn = createObjects(resultSet).get(0);
@@ -113,10 +113,10 @@ public abstract class AbstractDAO<T> {
    }
 
    /**
-    * <p>Build the query for finding an object with a given id</p>
+    * <p>Builds the query for finding an object with a given id</p>
     * @return find query
     */
-   private String createFindQuery() {
+   private String createFindByIdQuery() {
       return "SELECT * FROM `" + type.getSimpleName() + "` WHERE ID = ?";
    }
 
@@ -143,7 +143,7 @@ public abstract class AbstractDAO<T> {
    }
 
    /**
-    * <p>Build the query for updating an object from database</p>
+    * <p>Builds the query for updating an object from database</p>
     * @return update query
     */
    private String createUpdateQuery() {
@@ -225,7 +225,7 @@ public abstract class AbstractDAO<T> {
    }
 
    /**
-    * <p>Replace '?' in statements with object's values</p>
+    * <p>Replaces '?' in statements with object's values</p>
     * @param preparedStatement statement where replace will happen
     * @param object object where the values will be taken
     * @param isUpdateQuery if it is a create query or an update one
@@ -285,7 +285,7 @@ public abstract class AbstractDAO<T> {
     * @param resultSet result set where the object will be made from
     * @return list of created objects
     */
-   private ArrayList<T> createObjects(ResultSet resultSet) {
+   protected ArrayList<T> createObjects(ResultSet resultSet) {
       ArrayList<T> list = new ArrayList<>();
       try {
          while (resultSet.next()) {

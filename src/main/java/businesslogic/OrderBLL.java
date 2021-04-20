@@ -30,7 +30,7 @@ public class OrderBLL extends AbstractBLL<Order> {
    }
 
    /**
-    * <p>Makes call to insert a new order in database</p>
+    * <p>>Tries to validate an order and, if the order is valid, makes call to insert it into database</p>
     * @param newOrder order to be added to database
     * @return inserted order id
     */

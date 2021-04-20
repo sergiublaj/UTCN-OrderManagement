@@ -32,7 +32,7 @@ public class ViewObjectsListener<T> implements ActionListener {
    }
 
    /**
-    * <p>Adds meaning to button</p>
+    * <p>When pressed, shows a table of objects</p>
     * @param e current event
     */
    @Override

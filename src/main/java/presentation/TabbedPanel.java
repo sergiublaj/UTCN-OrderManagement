@@ -64,12 +64,12 @@ public class TabbedPanel extends JPanel {
          removeObject.setIcon(new ImageIcon("src/main/resources/images/remove.png"));
          removeObject.setCursor(new Cursor(Cursor.HAND_CURSOR));
          buttonsPanel.add(removeObject);
-      }
 
-      searchObject = new JButton("Search " + this.objectName);
-      searchObject.setIcon(new ImageIcon("src/main/resources/images/search.png"));
-      searchObject.setCursor(new Cursor(Cursor.HAND_CURSOR));
-      buttonsPanel.add(searchObject);
+         searchObject = new JButton("Search " + this.objectName);
+         searchObject.setIcon(new ImageIcon("src/main/resources/images/search.png"));
+         searchObject.setCursor(new Cursor(Cursor.HAND_CURSOR));
+         buttonsPanel.add(searchObject);
+      }
 
       viewObjects = new JButton("View all " + this.objectName + "s");
       viewObjects.setIcon(new ImageIcon("src/main/resources/images/view.png"));

@@ -31,7 +31,7 @@ public class RemoveObjectListener<T> implements ActionListener {
    }
 
    /**
-    * <p>Adds meaning to button</p>
+    * <p>Tries to remove an object when pressed</p>
     * @param e current event
     */
    @Override

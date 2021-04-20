@@ -27,7 +27,7 @@ public class ConnectionFactory {
    }
 
    /**
-    * <p>Method create the connections to the database</p>
+    * <p>Method creates the connections to the database</p>
     * @return database connection
     */
    private Connection createConnection() {
@@ -35,14 +35,14 @@ public class ConnectionFactory {
       try {
          dbConnection = DriverManager.getConnection(URL, USER, PASSWORD);
       } catch (SQLException throwable) {
-         LOGGER.log(Level.WARNING, "[DB] An error occured while trying to connect to the database!");
+         LOGGER.log(Level.WARNING, "[DB] An error occurred while trying to connect to the database!");
          throwable.printStackTrace();
       }
       return dbConnection;
    }
 
    /**
-    * <p>Returns the singletone instance of databse connection object</p>
+    * <p>Returns the singleton instance of database connection object</p>
     * @return connection to the database
     */
    public static Connection getConnection() {
@@ -52,22 +52,22 @@ public class ConnectionFactory {
    /**
     * <p>Closes the database related objects</p>
     * @param dbConnection database connection
-    * @param crtStatememnt connection statement
+    * @param crtStatement connection statement
     * @param resultSet connection result set
     */
-   public static void closeAll(Connection dbConnection, Statement crtStatememnt, ResultSet resultSet) {
+   public static void closeAll(Connection dbConnection, Statement crtStatement, ResultSet resultSet) {
       try {
          if (dbConnection != null) {
             dbConnection.close();
          }
-         if (crtStatememnt != null) {
-            crtStatememnt.close();
+         if (crtStatement != null) {
+            crtStatement.close();
          }
          if (resultSet != null) {
             resultSet.close();
          }
       } catch (SQLException throwable) {
-         LOGGER.log(Level.WARNING, "An error occured while trying to close the Connection, Statement or ResultSet!");
+         LOGGER.log(Level.WARNING, "An error occurred while trying to close the Connection, Statement or ResultSet!");
          throwable.printStackTrace();
       }
    }

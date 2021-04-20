@@ -25,7 +25,7 @@ public class ProductBLL extends AbstractBLL<Product> {
    }
 
    /**
-    * <p>Makes call to insert a new product in database</p>
+    * <p>Tries to validate a product and, if the product is valid, makes call to insert it into database</p>
     * @param newProduct product to be added to database
     * @return inserted product id
     */
@@ -37,11 +37,14 @@ public class ProductBLL extends AbstractBLL<Product> {
    }
 
    /**
-    * <p>Makes call to update an existing product from database</p>
+    * <p>Tries to validate a product and, if the client is valid, makes call to update an existing product from database</p>
     * @param toUpdate product to be updated
     * @return boolean value representing success or fail
     */
    public boolean editProduct(Product toUpdate) {
+      for (Validator<Product> crtValidator : validators) {
+         crtValidator.validate(toUpdate);
+      }
       return productDAO.update(toUpdate);
    }
 
@@ -52,6 +55,15 @@ public class ProductBLL extends AbstractBLL<Product> {
     */
    public Product searchProduct(int productId) {
       return productDAO.findById(productId);
+   }
+
+   /**
+    * <p>Makes call to search a product in database</p>
+    * @param productName name of the product to be searched
+    * @return the found product or null
+    */
+   public Product searchProduct(String productName) {
+      return productDAO.findByName(productName);
    }
 
    /**

@@ -80,7 +80,7 @@ public class MainFrame extends JFrame {
     * <p>Adds informations about the developer</p>
     */
    private void addAuthorInfo() {
-      JLabel shortInfo = new JLabel("<html>Ver: 1.9_15.09<br>" +
+      JLabel shortInfo = new JLabel("<html>Ver: 1.10_21.46<br>" +
          "@ author Blaj Sergiu<br>" +
          "@ group 30225</html>");
       shortInfo.setFont(new Font("JetBrains Mono", Font.PLAIN, 15));
@@ -149,6 +149,36 @@ public class MainFrame extends JFrame {
       JTextField newInput = new JTextField(50);
       newInput.setFont(new Font("Tahoma", Font.PLAIN, 20));
       return newInput;
+   }
+
+   /**
+    * <p>Creates a combobox of integers</p>
+    * @return integer combobox
+    */
+   public static JComboBox<String> createComboBox() {
+      JComboBox<String> newComboBox = new JComboBox<>();
+      newComboBox.setFont(new Font("Tahoma", Font.PLAIN, 20));
+      return newComboBox;
+   }
+
+   /**
+    * <p>Sets up the panel title</p>
+    * @param panelTitle label to make the changes
+    */
+   public static void initializeTitle(JLabel panelTitle) {
+      panelTitle.setAlignmentX(CENTER_ALIGNMENT);
+      panelTitle.setFont(new Font("Tahoma", Font.BOLD, 25));
+      panelTitle.setBorder(new EmptyBorder(15, 0, 15, 0));
+   }
+
+   /**
+    * <p>Sets up the buttons</p>
+    * @param crtButton current button
+    */
+   public static void initializeButton(JButton crtButton) {
+      crtButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
+      crtButton.setAlignmentX(CENTER_ALIGNMENT);
+      crtButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
    }
 
    /**

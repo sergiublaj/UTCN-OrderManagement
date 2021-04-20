@@ -10,7 +10,7 @@ CREATE TABLE `client` (
   `email` varchar(45) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email_UNIQUE` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `product` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -19,7 +19,7 @@ CREATE TABLE `product` (
   `price` int NOT NULL,
   `stock` int DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `order` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -33,4 +33,4 @@ CREATE TABLE `order` (
   KEY `product_idx` (`product`),
   CONSTRAINT `client` FOREIGN KEY (`client`) REFERENCES `client` (`id`),
   CONSTRAINT `product` FOREIGN KEY (`product`) REFERENCES `product` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

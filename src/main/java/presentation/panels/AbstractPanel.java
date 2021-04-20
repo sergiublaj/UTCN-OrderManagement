@@ -26,6 +26,7 @@ public abstract class AbstractPanel<T> extends JPanel {
    private final ArrayList<JLabel> fieldsLabel = new ArrayList<>();
    private final ArrayList<JTextField> fieldsInput = new ArrayList<>();
    private final JTable objectTable = new JTable();
+   protected final JPanel midPanel = new JPanel();
 
    private DefaultTableModel tableEntries;
    private final JButton performOperationBtn = new JButton();
@@ -38,46 +39,26 @@ public abstract class AbstractPanel<T> extends JPanel {
    public AbstractPanel() {
       this.type = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
       this.setUp();
-      this.showCreateObjectPanel();
    }
 
    /**
-    * <p>Set up the panel</p>
+    * <p>Sets up the panel</p>
     */
    private void setUp() {
       this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-      this.initializeTitle();
-      this.initializeButton(performOperationBtn);
-      this.initializeButton(nextStepBtn);
+      MainFrame.initializeTitle(panelTitle);
+      MainFrame.initializeButton(performOperationBtn);
+      MainFrame.initializeButton(nextStepBtn);
 
       ArrayList<String> tableHeader = new ArrayList<>();
-      for (Field field : type.getDeclaredFields()) {
-         fieldsLabel.add(MainFrame.createLabel(field.getName().toUpperCase() + ": "));
+      for (Field value : type.getDeclaredFields()) {
+         fieldsLabel.add(MainFrame.createLabel(value.getName().toUpperCase() + ": "));
          fieldsInput.add(MainFrame.createInput());
-         tableHeader.add(field.getName().toUpperCase());
+         tableHeader.add(value.getName().toUpperCase());
       }
 
       tableEntries = new DefaultTableModel(tableHeader.toArray(), 0);
-   }
-
-   /**
-    * <p>Set up the panel title</p>
-    */
-   private void initializeTitle() {
-      panelTitle.setAlignmentX(CENTER_ALIGNMENT);
-      panelTitle.setFont(new Font("Tahoma", Font.BOLD, 25));
-      panelTitle.setBorder(new EmptyBorder(15, 0, 15, 0));
-   }
-
-   /**
-    * <p>Set up the buttons</p>
-    * @param crtButton current button
-    */
-   private void initializeButton(JButton crtButton) {
-      crtButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
-      crtButton.setAlignmentX(CENTER_ALIGNMENT);
-      crtButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
    }
 
    /**
@@ -231,19 +212,14 @@ public abstract class AbstractPanel<T> extends JPanel {
     * @param hasId boolean value representing the needing of showing the id of object or not
     */
    public void showObjectInfo(boolean hasId) {
-      int fieldsNb;
-      if (type.getSimpleName().compareTo("Order") == 0) {
-         fieldsNb = hasId ? fieldsInput.size() : fieldsInput.size() - 3;
-      } else {
-         fieldsNb = hasId ? fieldsInput.size() : fieldsInput.size() - 1;
-      }
-      JPanel midPanel = new JPanel(new GridLayout(fieldsNb, 2, -150, 10));
+      int fieldsNb = hasId ? fieldsLabel.size() : fieldsLabel.size() - 1;
+      midPanel.setLayout(new GridLayout(fieldsNb, 2, -150, 10));
       midPanel.setMaximumSize(new Dimension(650, fieldsNb * 50));
       midPanel.setBorder(new EmptyBorder(20, 100, 20, 100));
       this.add(midPanel);
 
       for (int i = 0; i < fieldsLabel.size(); i++) {
-         if (hasId || i > 0 && (type.getSimpleName().compareTo("Order") != 0 || type.getSimpleName().compareTo("Order") == 0 && i < fieldsLabel.size() - 2)) {
+         if (hasId || i > 0) {
             midPanel.add(fieldsLabel.get(i));
             midPanel.add(fieldsInput.get(i));
          }
@@ -255,8 +231,8 @@ public abstract class AbstractPanel<T> extends JPanel {
     * @param isEnabled input status
     */
    public void enableFields(boolean isEnabled) {
-      for (JTextField textField : fieldsInput) {
-         textField.setEnabled(isEnabled);
+      for (JTextField field : fieldsInput) {
+         field.setEnabled(isEnabled);
       }
    }
 
@@ -284,18 +260,22 @@ public abstract class AbstractPanel<T> extends JPanel {
          for (int i = 0; i < field.length; i++) {
             PropertyDescriptor propertyDescriptor = new PropertyDescriptor(field[i].getName(), type);
             Method method = propertyDescriptor.getWriteMethod();
-            if (method.toString().endsWith("(int)")) {
-               if (fieldsInput.get(i).getText().trim().isBlank()) {
-                  method.invoke(object, 0);
-               } else {
-                  method.invoke(object, Integer.parseInt(fieldsInput.get(i).getText()));
-               }
-            } else if (method.toString().endsWith("(java.sql.Date)")) {
-               method.invoke(object, new Date(System.currentTimeMillis()));
+            if(i > 0 && fieldsInput.get(i).getText().trim().isBlank()) {
+               MainFrame.showAlert("Fill in all the fields!");
+               return null;
             } else {
-               method.invoke(object, fieldsInput.get(i).getText());
+               if (method.toString().endsWith("(int)")) {
+                  try {
+                     method.invoke(object, Integer.parseInt(fieldsInput.get(i).getText()));
+                  } catch (Exception e) {
+                     method.invoke(object, 0);
+                  }
+               } else if (method.toString().endsWith("(java.sql.Date)")) {
+                  method.invoke(object, new Date(System.currentTimeMillis()));
+               } else {
+                  method.invoke(object, (fieldsInput.get(i)).getText());
+               }
             }
-
          }
       } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | IntrospectionException e) {
          e.printStackTrace();
@@ -319,7 +299,9 @@ public abstract class AbstractPanel<T> extends JPanel {
     */
    public void clearFields() {
       for (int i = 0; i < fieldsLabel.size(); i++) {
-         fieldsInput.get(i).setText("");
+         if (fieldsInput.get(i).getClass() == JTextField.class) {
+            fieldsInput.get(i).setText("");
+         }
       }
    }
 

@@ -23,7 +23,7 @@ public class Controller {
    }
 
    /**
-    * <p>Adds the event listeners</p>
+    * <p>Adds the event listeners for buttons</p>
     */
    private void addEventListeners() {
       this.addClientEventListeners();
@@ -32,7 +32,7 @@ public class Controller {
    }
 
    /**
-    * <p>Adds the events listeners fro clients panel</p>
+    * <p>Adds the events listeners for the buttons in clients panel</p>
     */
    private void addClientEventListeners() {
       TabbedPanel tabbedPanel = (TabbedPanel) mainFrame.getPanelContainer().getComponentAt(0);
@@ -80,7 +80,7 @@ public class Controller {
    }
 
    /**
-    * <p>Adds the events listeners for product panel</p>
+    * <p>Adds the events listeners for the buttons in products panel</p>
     */
    private void addProductEventListeners() {
       TabbedPanel tabbedPanel = (TabbedPanel) mainFrame.getPanelContainer().getComponentAt(1);
@@ -128,7 +128,7 @@ public class Controller {
    }
 
    /**
-    * <p>Adds the events listeners for order panel</p>
+    * <p>Adds the events listeners for the buttons in orders panel</p>
     */
    private void addOrderEventListeners() {
       TabbedPanel tabbedPanel = (TabbedPanel) mainFrame.getPanelContainer().getComponentAt(2);
@@ -142,14 +142,6 @@ public class Controller {
          orderPanel.addPerformOperationBtnListener(new CreateObjectListener<>(orderPanel, orderBLL));
       });
       orderPanel.addPerformOperationBtnListener(new CreateObjectListener<>(orderPanel, orderBLL));
-
-      tabbedPanel.addSearchButtonListener(e -> {
-         orderPanel.clearFields();
-         orderPanel.removeAllEventListeners();
-         orderPanel.showObjectByIdPanel();
-         orderPanel.addNextStepBtnListener(new NextStepListener<>(orderPanel, orderBLL, "order", "search"));
-         orderPanel.addPerformOperationBtnListener(new SearchObjectListener<>(orderPanel, orderBLL, "order"));
-      });
 
       tabbedPanel.addViewButtonListener(e -> {
          orderPanel.clearFields();

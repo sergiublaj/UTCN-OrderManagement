@@ -2,7 +2,7 @@ import businesslogic.Controller;
 import presentation.MainFrame;
 
 /**
- * <p>Class to execute the application</p>
+ * <p>Class that executes the application</p>
  */
 public class MainClass {
    /**

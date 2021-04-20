@@ -30,7 +30,7 @@ public class EditObjectListener<T> implements ActionListener {
    }
 
    /**
-    * <p>Adds meaning to button</p>
+    * <p>Tries to make changes to an object from database when pressed</p>
     * @param e current event
     */
    @Override

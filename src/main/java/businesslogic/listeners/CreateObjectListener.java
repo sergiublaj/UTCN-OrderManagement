@@ -32,7 +32,7 @@ public class CreateObjectListener<T> implements ActionListener {
    }
 
    /**
-    * <p>Adds meaning to button</p>
+    * <p>Tries to insert an object into database when pressed</p>
     * @param e current event
     */
    @Override

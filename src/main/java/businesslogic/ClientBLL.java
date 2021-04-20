@@ -20,12 +20,12 @@ public class ClientBLL extends AbstractBLL<Client> {
     * <p>Default constructor adding the validators</p>
     */
    public ClientBLL() {
-      validators.add(new EmailValidator());
       validators.add(new AgeValidator());
+      validators.add(new EmailValidator());
    }
 
    /**
-    * <p>Makes call to insert a new client in database</p>
+    * <p>Tries to validate a client and, if the client is valid, makes call to insert it into database</p>
     * @param newClient client to be added to database
     * @return inserted client id
     */
@@ -37,11 +37,14 @@ public class ClientBLL extends AbstractBLL<Client> {
    }
 
    /**
-    * <p>Makes call to update an existing client from database</p>
+    * <p>Tries to validate a client and, if the client is valid, makes call to update an existing client from database</p>
     * @param toUpdate client to be updated
     * @return boolean value representing success or fail
     */
    public boolean editClient(Client toUpdate) {
+      for (Validator<Client> crtValidator : validators) {
+         crtValidator.validate(toUpdate);
+      }
       return clientDAO.update(toUpdate);
    }
 
@@ -52,6 +55,15 @@ public class ClientBLL extends AbstractBLL<Client> {
     */
    public Client searchClient(int clientId) {
       return clientDAO.findById(clientId);
+   }
+
+   /**
+    * <p>Makes call to search a client in database</p>
+    * @param clientName name of the client to be searched
+    * @return the found client or null
+    */
+   public Client searchClient(String clientName) {
+      return clientDAO.findByName(clientName);
    }
 
    /**

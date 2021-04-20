@@ -128,7 +128,6 @@ public class Order {
     * <p>Setter for order price</p>
     * @param price new order price
     */
-
    public void setPrice(int price) {
       this.price = price;
    }

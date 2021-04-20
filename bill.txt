@@ -1,184 +1,40 @@
--------- Order 11 --------
-client: 2
-product: 3
-amount: 1
-price: 10
-date: 2021-04-17
------ THANK YOU -----
-
--------- Order 12 --------
-client: 3
-product: 3
-amount: 23
-price: 230
-date: 2021-04-17
------ THANK YOU -----
-
--------- Order 13 --------
-client: 2
-product: 2
-amount: 2
-price: 10
-date: 2021-04-17
------ THANK YOU -----
-
------- Order 14 ------
-client: 2
-product: 1
-amount: 3
-price: 9
-date: 2021-04-17
------ THANK YOU -----
-
------- Order -1 ------
-client: 1
-product: 2
-amount: 3
-price: 15
-date: 2021-04-17
------ THANK YOU! -----
-
------- Order -1 ------
+------ Order 1 ------
 client: 1
 product: 1
-amount: 1
-price: 3
-date: 2021-04-17
------ THANK YOU! -----
-
------- Order 15 ------
-client: 1
-product: 2
-amount: 3
-price: 15
-date: 2021-04-17
------ THANK YOU! -----
-
------- Order 16 ------
-client: 2
-product: 3
-amount: 4
-price: 40
-date: 2021-04-17
------ THANK YOU! -----
-
------- Order 17 ------
-client: 2
-product: 4
-amount: 1
-price: 3000
-date: 2021-04-17
------ THANK YOU! -----
-
------- Order 18 ------
-client: 3
-product: 3
-amount: 1
-price: 10
-date: 2021-04-17
------ THANK YOU! -----
-
------- Order 19 ------
-client: 3
-product: 3
-amount: 13
-price: 130
-date: 2021-04-17
------ THANK YOU! -----
-
------- Order 20 ------
-client: 6
-product: 3
-amount: 12
-price: 120
-date: 2021-04-17
------ THANK YOU! -----
-
------- Order 21 ------
-client: 3
-product: 3
-amount: 10
-price: 100
-date: 2021-04-17
------ THANK YOU! -----
-
------- Order 21 ------
-client: 1
-product: 1
-amount: 18
-price: 54
-date: 2021-04-18
------ THANK YOU! -----
-
------- Order 22 ------
-client: 2
-product: 3
-amount: 5
-price: 750
-date: 2021-04-18
------ THANK YOU! -----
-
------- Order 23 ------
-client: 3
-product: 3
 amount: 15
-price: 2250
-date: 2021-04-18
+price: 45
+date: 2021-04-20
 ----- THANK YOU! -----
 
------- Order 24 ------
+------ Order 2 ------
 client: 3
-product: 3
-amount: 8
-price: 1200
-date: 2021-04-18
------ THANK YOU! -----
-
------- Order 25 ------
-client: 2
-product: 2
-amount: 1
-price: 5
-date: 2021-04-18
------ THANK YOU! -----
-
------- Order 26 ------
-client: 1
 product: 2
 amount: 5
-price: -5
-date: 2021-04-18
+price: 25
+date: 2021-04-20
 ----- THANK YOU! -----
 
------- Order 27 ------
+------ Order 1 ------
 client: 1
 product: 1
-amount: 3
-price: -3
-date: 2021-04-18
+amount: 15
+price: 45
+date: 2021-04-20
 ----- THANK YOU! -----
 
------- Order 28 ------
-client: 1
-product: 1
-amount: 3
-price: -3
-date: 2021-04-18
------ THANK YOU! -----
-
------- Order 29 ------
-client: 1
-product: 1
-amount: 3
-price: 9
-date: 2021-04-18
------ THANK YOU! -----
-
------- Order 30 ------
-client: 2
+------ Order 2 ------
+client: 3
 product: 2
-amount: 3
-price: 15
-date: 2021-04-18
+amount: 20
+price: 100
+date: 2021-04-20
+----- THANK YOU! -----
+
+------ Order 3 ------
+client: 2
+product: 3
+amount: 2
+price: 20
+date: 2021-04-20
 ----- THANK YOU! -----
 
